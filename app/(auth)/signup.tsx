@@ -23,6 +23,16 @@ export default function Signup() {
       Alert.alert("Please fill all fields")
       return
     }
+    if (!(email.length > 13 && email.includes("@") && email.includes(".com"))) {
+      console.log("Check your email")
+      return
+    }
+
+    // password must be > 8 chars
+    if (password.length <= 8) {
+      console.log("Check your password")
+      return
+    }
     if (password !== confirm) {
       Alert.alert("Passwords do not match")
       return

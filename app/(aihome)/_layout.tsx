@@ -37,15 +37,13 @@ export default function HomeLayout() {
 
         headerRight: () => (
           <View className="flex-row items-center pr-4 space-x-3 gap-3">
-            <TouchableOpacity activeOpacity={0.8} onPress={()=>Alert.alert("Profile Section")}>
+            <TouchableOpacity activeOpacity={0.8} onPress={()=>router.push("/(aihome)/profile")}>
               <View className="w-14 h-14 rounded-2xl bg-transparent items-center justify-center shadow-md border border-yellow-400">
-                {/* <Text className="text-white text-2xl font-bold">P</Text> */}
                 <User color={"white"} size={20}/>
               </View>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.8} onPress={()=>setShowLogout(true)}>
               <View className="w-14 h-14 rounded-2xl bg-transparent items-center justify-center shadow-md border border-yellow-400">
-                {/* <Text className="text-white text-2xl font-bold">L</Text> */}
                 <LogOutIcon color={"white"}/>
               </View>
              </TouchableOpacity>
@@ -68,7 +66,34 @@ export default function HomeLayout() {
         <Stack.Screen 
             name="chatsec" 
             options={{
-               title: "Chat Section Testing",
+              title: "ChatSection",
+               headerTitleStyle:{
+                color:'white',
+                fontSize:23,
+                fontWeight:'bold'
+               }
+            }} 
+          />
+        <Stack.Screen 
+            name="profile" 
+            options={{
+              title: "Profile",
+              headerShown:false,
+              presentation: "formSheet",
+              gestureDirection: "vertical",
+              animation : 'slide_from_bottom',
+              sheetGrabberVisible : true,
+              sheetInitialDetentIndex: 0,
+              sheetAllowedDetents : [0.5,0.75,1],
+              sheetCornerRadius:20,
+              sheetElevation:24,
+              sheetExpandsWhenScrolledToEdge:true
+            }} 
+          />
+        <Stack.Screen 
+            name="logout" 
+            options={{
+               title: "",
                headerTitleStyle:{
                 color:'white',
                 fontSize:23,
@@ -78,7 +103,7 @@ export default function HomeLayout() {
             }} 
           />
         <Stack.Screen 
-            name="logout" 
+            name="terms" 
             options={{
                title: "",
                headerTitleStyle:{

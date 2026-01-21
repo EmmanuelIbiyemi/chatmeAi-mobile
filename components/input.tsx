@@ -33,7 +33,7 @@ export default function Input({
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="absolute left-4 right-4 bottom-4 "
+      className=" absolute left-4 right-4 bottom-4 "
     >
       <View className=" flex-row items-end space-x-3 justify-center gap-3">
         {/* Attachment is separate */}
@@ -50,12 +50,13 @@ export default function Input({
             value={text}
             onChangeText={setText}
             placeholder="Ask ChatMe"
-            placeholderTextColor="#9CA3AF"
             multiline
+            placeholderTextColor="#9CA3AF"
             returnKeyType="send"
             onSubmitEditing={send}
             className="flex-1 text-white text-base max-h-36 pr-2"
             accessibilityLabel="Message input"
+            
           />
 
           {text.trim() === '' ? (
@@ -86,4 +87,3 @@ export default function Input({
     </KeyboardAvoidingView>
   )
 }
-// ...existing

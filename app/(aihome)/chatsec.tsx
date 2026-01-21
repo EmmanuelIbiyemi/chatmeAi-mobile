@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, FlatList , Platform, KeyboardAvoidingView} from 'react-native'
 import React, { useState , useRef} from 'react'
 import Input from '@/components/input'
+import AudioChecker from "@/app/(aihome)/audiomodal"
 type Msg = { id: string; text: string; from: 'user' | 'bot' }
 
 export default function ChatSection() {
@@ -66,8 +67,7 @@ export default function ChatSection() {
       </View>
 
       <Input onSend={handleSend} />
+      <AudioChecker />
     </KeyboardAvoidingView>
   )
 }
-
-const styles = StyleSheet.create({})

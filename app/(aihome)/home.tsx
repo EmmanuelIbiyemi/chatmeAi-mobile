@@ -4,19 +4,22 @@ import { Text, View, FlatList , Platform, KeyboardAvoidingView } from 'react-nat
 import React, { useState , useRef, useEffect } from 'react'
 import Input from '@/components/input'
 import ThinkingBubble from "@/components/animatedbubble"
+import Constants from 'expo-constants'
 type Msg = { id: string; text: string; from: 'user' | 'bot' }
 
 export default function Home() {
     const [messages, setMessages] = useState<Msg[]>([])
     const listRef = useRef<FlatList<Msg> | null>(null)
 
-    const APIKEY = process.env.GEMINI_APIKEY
+    const APIKEY = (Constants.expoConfig && Constants.expoConfig.extra?.GEMINI_APIKEY) ||
+    (Constants.manifest && Constants.manifest.extra?.GEMINI_APIKEY) ||
+    ""
 
     // keep API call unchanged, just return parsed text so we can append reliably
      const callGenAI = async (text: any) => {
       try {
         const res = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=AIzaSyDK8LfV5QqIsWgWIDjamuYe3rZOCsXOR20`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${APIKEY}`,
           {
             method: "POST",
             headers: {
@@ -98,7 +101,7 @@ export default function Home() {
         >
           {
             item.from === 'bot'
-                ? (item.text.trim() === '' ? <ThinkingBubble /> : <Text className="text-base">{renderMessageText(item.text, isUser)}</Text>)
+                ? (item.text.trim() === '**ChatAi**: ' ? <ThinkingBubble /> : <Text className="text-base">{renderMessageText(item.text, isUser)}</Text>)
                 : <Text className="text-base">{renderMessageText(item.text, isUser)}</Text>
           }
         </View>
