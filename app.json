@@ -21,7 +21,9 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "permissions": ["android.permission.RECORD_AUDIO"],
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
       "package": "com.anonymous.SpeectToTextApp"
     },
     "web": {
@@ -54,17 +56,22 @@
         {
           "microphonePermission": "Allow $(PRODUCT_NAME) to use the microphone.",
           "speechRecognitionPermission": "Allow $(PRODUCT_NAME) to use speech recognition.",
-          // Add additional speech service packages here that aren't listed
-          // under the `forceQueryable` section when running the command:
-          // "adb shell dumpsys package queries"
-          // default: ["com.google.android.googlequicksearchbox"]
-          "androidSpeechServicePackages": ["com.google.android.googlequicksearchbox"]
+          "androidSpeechServicePackages": [
+            "com.google.android.googlequicksearchbox"
+          ]
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "GEMINI_APIKEY": "",
+      "router": {},
+      "eas": {
+        "projectId": "c4445617-3e46-4194-8778-4d67e73d7f1e"
+      }
     }
   }
 }

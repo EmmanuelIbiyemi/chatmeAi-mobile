@@ -31,15 +31,23 @@ export default function Input({
     setText('')
   }
 
-  useSpeechRecognitionEvent("error", (event) => {
-    console.log("error code:", event.error, "error messsage:", event.message);
-  });
+  
+
   
   // --This is the record section
   const [recording, setRecord] = useState(false)
-  const startRecording = async () => {
-    try {
-      ExpoSpeechRecognitionModule.requestPermissionsAsync().then((result) => {
+
+  useSpeechRecognitionEvent("start", () => setRecord(true));
+  useSpeechRecognitionEvent("end", () => setRecord(false));
+  useSpeechRecognitionEvent("result", (event) => {
+    setText(event.results[0].transcript);
+  });
+  useSpeechRecognitionEvent("error", (event) => {
+    console.log("error code:", event.error, "error messsage:", event.message);
+  });
+
+    const handleStart = () => {
+    ExpoSpeechRecognitionModule.requestPermissionsAsync().then((result) => {
       if (!result.granted) {
         console.warn("Permissions not granted", result);
         return;
@@ -55,6 +63,11 @@ export default function Input({
         contextualStrings: ["Carlsen", "Nepomniachtchi", "Praggnanandhaa"],
       });
     });
+  };
+
+  const startRecording =  () => {
+    try {
+      handleStart()
     } catch (e) {
       console.log(e);
     }
