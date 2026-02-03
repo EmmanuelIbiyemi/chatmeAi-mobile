@@ -1,5 +1,5 @@
 // ...existing code...
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import {
   View,
   TextInput,
@@ -11,6 +11,11 @@ import {
 } from 'react-native'
 
 import { Send, Mic, SquareStop } from 'lucide-react-native'
+
+import {
+  ExpoSpeechRecognitionModule,
+  useSpeechRecognitionEvent,
+} from "@jamsch/expo-speech-recognition";
 
 export default function Input({
   onSend,
@@ -25,9 +30,44 @@ export default function Input({
     onSend?.(t)
     setText('')
   }
+
+  useSpeechRecognitionEvent("error", (event) => {
+    console.log("error code:", event.error, "error messsage:", event.message);
+  });
   
   // --This is the record section
   const [recording, setRecord] = useState(false)
+  const startRecording = async () => {
+    try {
+      ExpoSpeechRecognitionModule.requestPermissionsAsync().then((result) => {
+      if (!result.granted) {
+        console.warn("Permissions not granted", result);
+        return;
+      }
+      // Start speech recognition
+      ExpoSpeechRecognitionModule.start({
+        lang: "en-US",
+        interimResults: true,
+        maxAlternatives: 1,
+        continuous: false,
+        requiresOnDeviceRecognition: false,
+        addsPunctuation: false,
+        contextualStrings: ["Carlsen", "Nepomniachtchi", "Praggnanandhaa"],
+      });
+    });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const stopRecording = async () => {
+    try {
+      ExpoSpeechRecognitionModule.stop();
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   recording === true ? console.log("Recording Started"):console.log("Record Ended")
 
   return (
@@ -61,10 +101,10 @@ export default function Input({
 
           {text.trim() === '' ? (
               <TouchableOpacity
-              onPress={() => setRecord(!recording)}
-              className="ml-2 w-12 h-12 items-center justify-center rounded-full bg-white"
-              activeOpacity={1}
-            >
+                onPress={() => { recording ? stopRecording() : startRecording();}}
+                className="ml-2 w-12 h-12 items-center justify-center rounded-full bg-white"
+                activeOpacity={1}
+              >
               {recording ? (
                 <SquareStop color="black" size={20} />
               ) : (

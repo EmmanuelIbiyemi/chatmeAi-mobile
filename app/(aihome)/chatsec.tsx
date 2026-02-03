@@ -67,7 +67,7 @@ export default function ChatSection() {
       </View>
 
       <Input onSend={handleSend} />
-      <AudioChecker />
+      {/* <AudioChecker /> */}
     </KeyboardAvoidingView>
   )
 }
